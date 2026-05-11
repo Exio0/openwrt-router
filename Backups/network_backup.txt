@@ -1,0 +1,70 @@
+package network
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+	option ula_prefix 'fdcc:295e:3aab::/48'
+
+config device
+	option name 'br-lan'
+	option type 'bridge'
+	list ports 'eth0'
+
+config interface 'lan'
+	option device 'br-lan'
+	option proto 'static'
+	option ipaddr '192.168.1.7'
+	option netmask '255.255.255.0'
+	option ip6assign '60'
+	option gateway '192.168.1.1'
+	list dns '192.168.1.1'
+	list dns '8.8.8.8'
+	list dns '8.8.4.4'
+
+config interface 'wg_s2s_b'
+	option proto 'wireguard'
+	option private_key 'EKqRorIstDtPjtDpqDSOyO14ReIv/fAiXi321Yp9Q3s='
+	option listen_port '51820'
+	list addresses '192.168.9.1/24'
+
+config wireguard_wg_s2s_b 's2s_vpn_site_a'
+	option public_key 'sbr7qT/rCdkT1Yvf8B4/3g61WTB9FE15pztT/EnQwB0='
+	option preshared_key 'il3f0TIhnn7jj5ucmv0CzCHjLiK9/R4O1GOKAD4bZMY='
+	option description 'Site A, exio0.ddns.net, CasaT'
+	option route_allowed_ips '1'
+	option persistent_keepalive '25'
+	option endpoint_host 'exio0.ddns.net'
+	option endpoint_port '51820'
+	list allowed_ips '192.168.2.0/24'
+	list allowed_ips 'fdff:ffff:ffff::/48'
+	list allowed_ips '192.168.9.2/32'
+
+config device
+	option name 'wg_s2s_b'
+	option ipv6 '0'
+
+config wireguard_wg_s2s_b
+	option description 'iPhone 12 Pro de Paco'
+	option public_key 'xBD8AqULJB6Q1WYqhNli8rApfOY8kHHL21GnirjmwX0='
+	option private_key '2AzZIZznpaTy4R5Gt2DQNEvKykryJ6+F+a6vv+xLBXA='
+	list allowed_ips '192.168.9.3/32'
+	option route_allowed_ips '1'
+
+config wireguard_wg_s2s_b
+	option description 'Portátil Paco'
+	option public_key 'Ft0BYaZGgzG3E6kw3IxzOIJ4x9G6fkSZ9T9THzVVYHY='
+	list allowed_ips '192.168.9.4/32'
+	option private_key 'OFRXX1WV+MfbyioPjTQqVB+FWbeUfJJOCJ/kjieFD2o='
+	option route_allowed_ips '1'
+
+config wireguard_wg_s2s_b
+	option description 'iPhone 16 de Paco'
+	option public_key '73rdxv27fgsQNmZuX10W/5fY2fw8PMmYJYCpv2WhcTU='
+	option route_allowed_ips '1'
+	list allowed_ips '192.168.9.5/32'
+	option private_key '82sX2Mbdq2VTrE1W+hckITZFNjZ4EGdJQ7X/duqErjg='
+
