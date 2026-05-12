@@ -4,15 +4,15 @@ echo "=================================="
 echo " INSTALACION DE PAQUETES OPENWRT "
 echo "=================================="
 
-opkg update
+apk update
 
 while read pkg; do
 
-    if opkg list-installed | grep -q "^$pkg "; then
+    if apk list | grep -q "^$pkg "; then
         echo "[YA INSTALADO] $pkg"
     else
         echo "[INSTALANDO] $pkg"
-        opkg install "$pkg"
+        apk add "$pkg"
     fi
 
 done < packages.txt
